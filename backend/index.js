@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "https://your-vercel-domain.vercel.app",
+    origin: "https://express-js-on-vercel-five-puce.vercel.app/",
     credentials: true,
     secure: false,
   })
