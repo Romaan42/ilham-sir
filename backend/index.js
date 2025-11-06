@@ -109,8 +109,20 @@ app.post("/admin-login", async (req, res) => {
 
 app.get("/admin-check-login", authMiddleware, (req, res) => {
   const user = req.user;
-
   res.send({ adminLogin: true, message: "Welcome ILHAM SIR!", user: user });
+});
+
+app.get("/admin-logout", (req, res) => {
+  res.clearCookie("token");
+  res.send({ adminLogin: false, message: "Admin logged out successfully" });
+});
+
+app.delete("/student/:id", async (req, res) => {
+  const studentId = req.params.id;
+
+  await Student.findByIdAndDelete(studentId);
+  const students = await Student.find();
+  if (students) return res.send(students);
 });
 
 mongoose.connect(process.env.MONGO_URL).then(() => {

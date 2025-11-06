@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { checkAdminLogin } from '../store/adminLogin';
 import AdminPanel from './adminPanel';
 import Login from "./loginForm"
+import AdminLoader from './adminLoader';
 
 const Admin = () => {
     const dispatch = useDispatch()
@@ -15,7 +16,7 @@ const Admin = () => {
     useEffect(adminCheck, []);
 
 
-    if (loginLoading) return <p>Loading...</p>
+    if (loginLoading) return <AdminLoader />
     if (!adminData?.adminLogin) return <Login />
 
     return (

@@ -44,7 +44,8 @@ const Home = () => {
                             </p>
                         </div>
                         <div className="md:w-1/3 text-center">
-
+                            <img src="https://placehold.co/200x200/6366f1/ffffff?text=Ilham+Sir" alt="Ilham Sir"
+                                className="w-40 h-40 rounded-full border-4 border-indigo-600 shadow-lg mx-auto" />
                         </div>
                     </div>
                 </div>

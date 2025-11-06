@@ -4,12 +4,14 @@ import { MdDashboard } from "react-icons/md";
 import { FaBars, FaRegUser } from "react-icons/fa";
 import { IoIosPersonAdd } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
+import { useDispatch } from 'react-redux';
+import { adminLogout } from '../store/adminLogin';
 
 const AdminPanel = () => {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const location = useLocation();
-    // const { checkLoading, adminData } = useSelector((state) => state.adminLogin);
+
 
     const navigation = [
         { name: 'Dashboard', path: '/admin', icon: <MdDashboard /> },
@@ -23,7 +25,7 @@ const AdminPanel = () => {
     };
 
     const handleLogout = () => {
-
+        dispatch(adminLogout());
     }
     return (
         <div className="min-h-screen bg-gray-100">
@@ -54,7 +56,14 @@ const AdminPanel = () => {
                         </Link>
                     ))}
                 </nav>
-                <span className='py-1 absolute bottom-2 left-15 px-4 rounded-[4px] text-white cursor-pointer bg-blue-500 hover:bg-blue-700' onClick={handleLogout}>Logout</span>
+                <div className="absolute bottom-0 w-full mb-4 px-4">
+                    <button
+                        onClick={handleLogout}
+                        className="w-full cursor-pointer bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+                    >
+                        Logout
+                    </button>
+                </div>
             </div>
 
             {/* Main Content */}

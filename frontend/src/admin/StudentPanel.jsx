@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
-import { FaEye, FaTrash, FaUserEdit } from "react-icons/fa";
+import { FaBars, FaEye, FaPlusCircle, FaThLarge, FaTrash, FaUserEdit } from "react-icons/fa";
 import { useEffect } from "react";
-import { getAllStudents } from "../store/students";
+import { deleteStudent, getAllStudents } from "../store/students";
+import { Link } from "react-router-dom";
 
 const StudentPanel = () => {
     const dispatch = useDispatch()
@@ -10,6 +11,12 @@ const StudentPanel = () => {
     useEffect(() => {
         dispatch(getAllStudents())
     }, [])
+
+
+    const handleStudentDelete = (id) => {
+        dispatch(deleteStudent(id));
+        dispatch(getAllStudents());
+    }
 
     return (
         <main className="p-6">
@@ -22,10 +29,10 @@ const StudentPanel = () => {
                     </div>
 
                     <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 w-full lg:w-auto">
-                        <button className="bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 rounded-lg font-medium transition duration-200 flex items-center justify-center space-x-2 cursor-pointer">
-                            <i className="fas fa-plus"></i>
+                        <Link to="/admin/add-student" className="bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 rounded-lg font-medium transition duration-200 flex items-center justify-center space-x-2 cursor-pointer">
+                            <FaPlusCircle />
                             <span>Add New Student</span>
-                        </button>
+                        </Link>
 
                     </div>
                 </div>
@@ -54,11 +61,11 @@ const StudentPanel = () => {
                     Showing <span className="font-semibold">24</span> of <span className="font-semibold">124</span> students
                 </div>
                 <div className="flex space-x-2">
-                    <button className="p-2 bg-white border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">
-                        <i className="fas fa-th-large"></i>
+                    <button className="p-2 bg-white border cursor-pointer border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">
+                        <FaThLarge />
                     </button>
-                    <button className="p-2 bg-primary text-white border border-primary rounded-lg">
-                        <i className="fas fa-list"></i>
+                    <button className="p-2 bg-primary text-grey-900 cursor-pointer border border-primary rounded-lg">
+                        <FaBars />
                     </button>
                 </div>
             </div>
@@ -66,8 +73,10 @@ const StudentPanel = () => {
 
             <div className="bg-white rounded-xl shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
-                    {loading && <h1>loading...</h1>}
+
                     <table className="min-w-full divide-y divide-gray-200">
+                        {loading && <h1 className="p-5 font-bold text-center">Loading students...</h1>}
+                        {!loading && students.length === 0 && <h1 className="p-5 font-bold text-center">No students found</h1>}
                         <thead className="bg-gray-50">
                             <tr>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -131,13 +140,13 @@ const StudentPanel = () => {
                                         <div className="flex space-x-2">
                                             <button className="text-blue-600 text-2xl cursor-pointer hover:text-blue-900 transition duration-150">
                                                 <FaUserEdit />
-
                                             </button>
                                             <button className="text-green-600 text-2xl cursor-pointer hover:text-green-900 transition duration-150">
                                                 <FaEye />
                                             </button>
+
                                             <button className="text-red-600 text-1xl cursor-pointer hover:text-red-900 transition duration-150">
-                                                <FaTrash />
+                                                <FaTrash onClick={() => handleStudentDelete(val._id)} />
                                             </button>
                                         </div>
                                     </td>

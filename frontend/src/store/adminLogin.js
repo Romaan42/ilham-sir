@@ -25,9 +25,9 @@ export const checkAdminLogin = createAsyncThunk(
   }
 );
 
-// export const adminLogout = createAsyncThunk("adminLogout",async()=>{
-//   await api.get
-// })
+export const adminLogout = createAsyncThunk("adminLogout", async () => {
+  await api.get("/admin-logout");
+});
 
 const adminLoginSlice = createSlice({
   name: "adminLogin",
@@ -62,6 +62,9 @@ const adminLoginSlice = createSlice({
       })
       .addCase(checkAdminLogin.rejected, (state) => {
         state.loginLoading = false;
+        state.adminData = null;
+      })
+      .addCase(adminLogout.fulfilled, (state) => {
         state.adminData = null;
       });
   },
